@@ -13,17 +13,24 @@ def main():
         nargs="?",
         help="The coding task for the AI to perform.",
     )
+    parser.add_argument(
+        "-i",
+        "--interactive",
+        action="store_true",
+        help="Run in interactive mode.",
+    )
     args = parser.parse_args()
 
     console = Console()
     console.print(Panel("[bold magenta]Welcome to the Agentic Coding CLI Tool![/bold magenta]", border_style="green"))
 
-    if args.prompt:
-        prompt = args.prompt
+    if args.interactive:
+        run_agent(interactive=True)
+    elif args.prompt:
+        run_agent(prompt=args.prompt)
     else:
         prompt = Prompt.ask("[bold cyan]What can I code for you today?[/bold cyan]")
-
-    run_agent(prompt)
+        run_agent(prompt=prompt)
 
 if __name__ == "__main__":
     main()
